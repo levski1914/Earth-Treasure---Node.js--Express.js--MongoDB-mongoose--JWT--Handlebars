@@ -5,7 +5,4 @@ module.exports = (err, req, res, next) => {
   if (err.name === "CastError" && err.kind === "ObjectId") {
     return res.status(404).render("404", { error: "Invalid ID format" });
   }
-
-  // Обработка на всички останали грешки
-  res.status(500).render("500", { error: err.message });
 };

@@ -25,6 +25,10 @@ const mineralSchema = new Schema({
     type: String,
     required: true,
   },
+  location: {
+    type: String,
+    required: true,
+  },
   likes: {
     type: [Types.ObjectId],
     ref: "User",

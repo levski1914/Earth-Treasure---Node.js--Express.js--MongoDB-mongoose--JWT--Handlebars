@@ -5,58 +5,72 @@
     <section id="edit">
       <div class="form">
         <h2>Edit item</h2>
-        <form class="edit-form">
+        <form class="edit-form" method="post">
           <input
             type="text"
             name=""
             id="name"
             placeholder="Name"
-            value="Amethyst"
+           {{#if data.name}}
+            value="{{data.name}}"
+              {{/if}}
           />
           <input
             type="text"
             name=""
             id="category"
             placeholder="Category"
-            value="Silicate mineral"
+
+            {{#if data.category}}
+            value="{{data.category}}"
+            {{/if}}
           />
           <input
             type="text"
             name=""
             id="color"
             placeholder="Color"
-            value="Purple"
+                       
+             {{#if data.color}}
+
+            value="{{data.color}}"
+            {{/if}}
           />
           <input
             type="text"
             name=""
             id="stone-img"
             placeholder="Image"
-            value="https://m.media-amazon.com/images/I/71TIuyGllzS._AC_UF894,1000_QL80_.jpg"
+                        {{#if data.image}}
+
+            value="{{data.image}}"
+            {{/if}}
+
           />
           <input
             type="text"
             name=""
             id="location"
             placeholder="Location"
-            value="Artigas, Uruguay"
+            {{#if data.location}}
+            value="{{data.location}}"
+            {{/if}}
           />
           <input
             type="text"
             name=""
             id="formula"
             placeholder="Formula"
-            value="SiO2"
+               {{#if data.formula}}
+          
+            value="{{data.formula}}"
+          {{/if}}
           />
           <textarea
             id="description"
             placeholder="Description..."
             name=""
-          >Amethyst is a violet variety of quartz. The name comes from the Koine
-            Greek, a reference to the belief that the stone protected its owner
-            from drunkenness. Ancient Greeks wore amethyst and carved drinking
-            vessels from it in the belief that it would prevent intoxication.
-            Amethyst, a semiprecious stone, is often used in jewelry.</textarea>
+          >{{#if data.description}}{{data.description}}{{/if}}</textarea>
 
           <button type="submit">Edit</button>
         </form>

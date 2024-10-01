@@ -62,7 +62,7 @@ async function update(id, data, userId) {
 
 async function deleteById(id, userId) {
   const record = await Mineral.findById(id);
-
+  console.log("Намерен запис: ", record);
   if (!record) {
     throw new ReferenceError("Record not found" + id);
   }
@@ -74,28 +74,26 @@ async function deleteById(id, userId) {
   await Mineral.findByIdAndDelete(id);
 }
 
-async function getDetails(id, userId) {
-  // const mineralId=await Mineral.findById(id);
-
-  const mineral = await Mineral.findById(id).lean();
-  try {
-    if (!mineral) {
-      throw new Error("Mineral not found");
-    }
-
-    const isOwner = mineral.author.equals(userId);
-
-    return { mineral, isOwner };
-  } catch (err) {
-    throw new Error(err.message);
+async function likeMineral(mineralId, userId) {
+  const record = await Mineral.findById(mineralId);
+  if (!record) {
+    throw new ReferenceError("Record not found", +mineralId);
   }
+
+  if (record.author.toString() == userId) {
+    throw new Error("Access denied");
+  }
+
+  record.likes.push(userId);
+  await record.save();
+  return record;
 }
 
 module.exports = {
   getAll,
   getRecent,
   getById,
-  getDetails,
+  likeMineral,
   create,
   update,
   deleteById,
