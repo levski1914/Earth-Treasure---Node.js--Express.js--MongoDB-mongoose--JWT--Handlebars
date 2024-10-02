@@ -8,7 +8,7 @@
         <form class="edit-form" method="post">
           <input
             type="text"
-            name=""
+            name="name"
             id="name"
             placeholder="Name"
            {{#if data.name}}
@@ -17,7 +17,7 @@
           />
           <input
             type="text"
-            name=""
+            name="category"
             id="category"
             placeholder="Category"
 
@@ -27,7 +27,7 @@
           />
           <input
             type="text"
-            name=""
+            name="color"
             id="color"
             placeholder="Color"
                        
@@ -38,7 +38,7 @@
           />
           <input
             type="text"
-            name=""
+            name="image"
             id="stone-img"
             placeholder="Image"
                         {{#if data.image}}
@@ -49,7 +49,7 @@
           />
           <input
             type="text"
-            name=""
+            name="location"
             id="location"
             placeholder="Location"
             {{#if data.location}}
@@ -58,7 +58,7 @@
           />
           <input
             type="text"
-            name=""
+            name="formula"
             id="formula"
             placeholder="Formula"
                {{#if data.formula}}
@@ -69,7 +69,7 @@
           <textarea
             id="description"
             placeholder="Description..."
-            name=""
+            name="description"
           >{{#if data.description}}{{data.description}}{{/if}}</textarea>
 
           <button type="submit">Edit</button>

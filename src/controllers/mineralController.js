@@ -136,7 +136,7 @@ mineralRouter.get("/delete/:id", ownerOnly(), async (req, res, next) => {
   }
 });
 
-mineralRouter.get("/edit/:id", isUser(), async (req, res) => {
+mineralRouter.get("/edit/:id", ownerOnly(), async (req, res) => {
   const mineral = await getById(req.params.id);
 
   if (!mineral) {
@@ -144,6 +144,12 @@ mineralRouter.get("/edit/:id", isUser(), async (req, res) => {
     return;
   }
 
+  const isOwner = req.user._id == mineral.author.toString();
+
+  if (!isOwner) {
+    res.redirect("/login");
+    return;
+  }
   res.render("edit", { data: mineral });
 });
 
@@ -188,6 +194,7 @@ mineralRouter.post(
     })
     .withMessage("Must be valid URL"),
   async (req, res) => {
+    console.log(req.params.id);
     const mineralId = req.params.id;
     const userId = req.user._id;
     try {
@@ -197,7 +204,7 @@ mineralRouter.post(
       }
       const result = await update(mineralId, req.body, req.user._id);
 
-      res.redirect("/catalog" + mineralId);
+      res.redirect("/details/" + mineralId);
     } catch (err) {
       res.render("edit", {
         data: req.body,
@@ -216,6 +223,31 @@ mineralRouter.get("/like/:id", isUser(), async (req, res) => {
     res.redirect("/details/" + mineralId);
   } catch (err) {
     res.status(500).render("/details", { error: err.message });
+  }
+});
+
+mineralRouter.get("/search", async (req, res) => {
+  const minerals = await getAll();
+  res.render("search", { minerals });
+});
+
+mineralRouter.post("/search", async (req, res) => {
+  const searchQuery = req.body.search;
+
+  try {
+    let minerals;
+
+    if (searchQuery) {
+      const regex = new RegExp(searchQuery, "i");
+
+      minerals = await Mineral.find({ name: { $regex: regex } }).lean();
+    } else {
+      minerals = await Mineral.find().lean();
+    }
+
+    res.render("search", { minerals, searchQuery });
+  } catch (err) {
+    res.status(500).render("search", { error: err.message });
   }
 });
 

@@ -43,9 +43,6 @@ async function update(id, data, userId) {
     throw new Error("access denied");
   }
 
-  //TODO replace with real properties
-  record.prop = data.prop;
-
   record.name = data.name;
   record.category = data.category;
   record.color = data.color;
